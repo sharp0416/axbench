@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 import torch
 from pathlib import Path
 import numpy as np
-from my_tools.local_model_adapter import AsyncOpenAI
+from local_model_adapter import AsyncOpenAI
 import httpx, asyncio
 import datetime
 import yaml

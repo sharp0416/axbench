@@ -25,7 +25,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from axbench.utils.dataset import DatasetFactory
 from args.dataset_args import DatasetArgs
 from pathlib import Path
-from my_tools.local_model_adapter import AsyncOpenAI
+from local_model_adapter import AsyncOpenAI
 import httpx, asyncio
 from transformers import set_seed
 from axbench.utils.constants import * 
