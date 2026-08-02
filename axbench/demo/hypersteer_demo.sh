@@ -7,7 +7,7 @@ if ! command -v nvidia-smi &> /dev/null; then
 fi
 
 # Get the number of GPUs
-gpu_count=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)
+gpu_count=$(python -c "import torch; print(torch.cuda.device_count())")
 
 python axbench/scripts/generate.py --config axbench/demo/sweep/hypersteer_simple.yaml --dump_dir axbench/demo
 
