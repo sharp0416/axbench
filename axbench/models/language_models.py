@@ -76,9 +76,9 @@ class LanguageModelStats(object):
     def get_total_price(self):
         input_tokens, output_tokens = self.get_total_tokens()
         input_price = (input_tokens/UNIT_1M)*\
-            PRICING_DOLLAR_PER_1M_TOKEN[self.model]["input"]
+            PRICING_DOLLAR_PER_1M_TOKEN.get(self.model, {}).get("input", 0)
         output_price = (input_tokens/UNIT_1M)*\
-            PRICING_DOLLAR_PER_1M_TOKEN[self.model]["output"]
+            PRICING_DOLLAR_PER_1M_TOKEN.get(self.model, {}).get("output", 0)
         return input_price + output_price
     
     def print_report(self):
@@ -99,10 +99,10 @@ class LanguageModel(object):
 
     def __init__(self, model, client, dump_dir=None, use_cache=True, cache_level="api", **kwargs):
         self.model = model
-        if "gpt-4o" in model:
-            pass
-        else:
-            raise ValueError(f"{model} model class is not supported yet.")
+        # if "gpt-4o" in model:
+        #     pass
+        # else:
+        #     raise ValueError(f"{model} model class is not supported yet.")
         self.stats = LanguageModelStats(model)
         self.client = client
         # dump dir
@@ -121,10 +121,11 @@ class LanguageModel(object):
             self.cache_dir = Path(kwargs["master_data_dir"]) / "persist_lm_cache"
             self.cache_dir.mkdir(parents=True, exist_ok=True)
             # load cache from disk
+            model_name_for_path = self.model.replace("/", "-")
             if kwargs.get("cache_tag", None):
-                self.cache_file = self.cache_dir / f"{self.model}_{kwargs['cache_tag']}_cache.pkl"
+                self.cache_file = self.cache_dir / f"{model_name_for_path}_{kwargs['cache_tag']}_cache.pkl"
             else:
-                self.cache_file = self.cache_dir / f"{self.model}_cache.pkl"
+                self.cache_file = self.cache_dir / f"{model_name_for_path}_cache.pkl"
             if self.cache_file.exists():
                 with open(self.cache_file, "rb") as f:
                     self.cache_in_mem = pickle.load(f)

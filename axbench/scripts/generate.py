@@ -17,6 +17,7 @@ import json
 import csv
 import atexit
 import torch
+import requests
 
 import pandas as pd
 from tqdm.auto import tqdm
@@ -24,7 +25,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from axbench.utils.dataset import DatasetFactory
 from args.dataset_args import DatasetArgs
 from pathlib import Path
-from openai import AsyncOpenAI
+from local_model_adapter import AsyncOpenAI
 import httpx, asyncio
 from transformers import set_seed
 from axbench.utils.constants import * 

@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 import torch
 from pathlib import Path
 import numpy as np
-from openai import AsyncOpenAI
+from local_model_adapter import AsyncOpenAI
 import httpx, asyncio
 import datetime
 import yaml
@@ -357,7 +357,7 @@ def eval_steering_single_task(args_tuple):
     # Create LanguageModel instance within the worker process
     client = AsyncOpenAI(
         api_key=os.environ.get("OPENAI_API_KEY"),
-        timeout=60.0,
+        timeout=300.0,
         http_client=httpx.AsyncClient(
             limits=httpx.Limits(
                 max_keepalive_connections=100, 

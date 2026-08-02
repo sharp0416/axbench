@@ -23,7 +23,7 @@ from transformers import set_seed
 
 # all supported methods
 import axbench
-from openai import AsyncOpenAI
+from local_model_adapter import AsyncOpenAI
 import httpx, asyncio
 
 import logging
